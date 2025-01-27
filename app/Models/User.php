@@ -44,4 +44,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // app/Models/User.php
+    // 投稿のリレーション
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

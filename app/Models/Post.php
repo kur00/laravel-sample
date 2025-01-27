@@ -9,7 +9,15 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'content'];
+    // app/Models/Post.php
+    protected $fillable = ['name', 'content','user_id'];
+
+
+    // ユーザーとのリレーション
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // コメントのリレーション
     public function comments()
