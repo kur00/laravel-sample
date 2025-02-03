@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProfileController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,3 +29,8 @@ Route::get('/posts/tag/{tagId}', [PostController::class, 'searchByTag'])->name('
 Route::get('/posts/tag/search', [PostController::class, 'searchByTag'])->name('posts.searchByTag');
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
