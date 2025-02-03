@@ -10,7 +10,8 @@ class Post extends Model
     use HasFactory;
 
     // app/Models/Post.php
-    protected $fillable = ['name', 'content','user_id'];
+    protected $fillable = ['name', 'content','user_id','image_path'];
+    
 
 
     // ユーザーとのリレーション
