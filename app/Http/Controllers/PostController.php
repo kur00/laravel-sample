@@ -25,12 +25,19 @@ class PostController extends Controller
             'content' => 'required|max:255',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
 
         $post = Post::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'content' => $request->content,
+            'image_path' => $imagePath,
         ]);
 
         $post->tags()->attach($request->tags);

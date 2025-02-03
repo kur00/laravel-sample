@@ -32,6 +32,9 @@
         @foreach ($posts as $post)
             <div class="card mb-3">
                 <div class="card-body">
+                    @if($post->image_path)
+                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image" class="img-fluid mb-3">
+                    @endif
                     <p>{{ $post->content }}</p>
                     <small class="text-muted">投稿者: {{ $post->user->name }} / 投稿日時: {{ $post->created_at->format('Y-m-d H:i') }}</small>
                 </div>
