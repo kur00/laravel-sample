@@ -21,3 +21,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/posts/tag/{tagId}', [PostController::class, 'searchByTag'])->name('posts.searchByTag');
+
+Route::get('/posts/tag/search', [PostController::class, 'searchByTag'])->name('posts.searchByTag');
+
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');

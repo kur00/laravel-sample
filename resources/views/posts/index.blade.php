@@ -8,36 +8,35 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <!-- 投稿フォーム -->
-    <form method="POST" action="{{ route('posts.store') }}">
-        @csrf
-        <div class="mb-3">
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="タイトル">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+    <!-- タグ検索フォーム -->
+    <form method="GET" action="{{ route('posts.searchByTag') }}" class="mb-4">
+        <div class="input-group">
+            <select name="tag" class="form-control">
+                <option value="">タグを選択してください</option>
+                @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-outline-secondary">検索</button>
         </div>
-
-        <div class="mb-3">
-            <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="3" placeholder="投稿内容を入力してください"></textarea>
-            @error('content')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary">投稿</button>
     </form>
 
+    <a href="{{ route('posts.create') }}" class="btn btn-primary mb-4">新しい投稿を作成</a>
     <hr>
 
     <!-- 投稿一覧 -->
     <h2>投稿一覧</h2>
-    @foreach ($posts as $post)
-        <div class="card mb-3">
-            <div class="card-body">
-                <p>{{ $post->content }}</p>
-                <small class="text-muted">投稿者: {{ $post->user->name }} / 投稿日時: {{ $post->created_at->format('Y-m-d H:i') }}</small>
+    @if ($posts->isEmpty())
+        <p>選択したタグに関連する投稿はありません。</p>
+    @else
+        @foreach ($posts as $post)
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p>{{ $post->content }}</p>
+                    <small class="text-muted">投稿者: {{ $post->user->name }} / 投稿日時: {{ $post->created_at->format('Y-m-d H:i') }}</small>
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    @endif
 </div>
 @endsection
